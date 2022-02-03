@@ -1,20 +1,20 @@
 function add(first, second){
-    return first+second;
+    return parseFloat(first)+parseFloat(second);
 }
 
 function subtract(first, second){
-    return first-second;
+    return parseFloat(first)-parseFloat(second);
 }
 
 function multiply(first, second){
-    return first*second;
+    return parseFloat(first)*parseFloat(second);
 }
 
 function divide(first, second){
     return parseFloat(first)/parseFloat(second);
 }
 
-function equal(){
+function equalCheck(){
     switch (userCalculation) {
         case "divide":
             return divide(outputOne.textContent, runningTotal.textContent);
@@ -25,6 +25,13 @@ function equal(){
         case "subtract":
             return subtract(outputOne.textContent, runningTotal.textContent);
     }
+}
+
+function equal(){
+    let placeHolder = runningTotal.textContent;
+    runningTotal.textContent = equalCheck();
+    outputOne.textContent = placeHolder;
+    userCalculation = "";
 }
 
 let userCalculation = "";
@@ -39,6 +46,7 @@ buttons.forEach(button => {
         if (runningTotal.textContent.length >= 19) {
             runningTotal.textContent = runningTotal.textContent.slice(0,19);
         }
+
         if (button.classList == "numbers") {
             if (runningTotal.textContent == 0) {
                 runningTotal.textContent = button.textContent;
@@ -51,6 +59,10 @@ buttons.forEach(button => {
                     runningTotal.textContent += button.textContent;
                 }
             }
+            else if (!outputOne.textContent && userCalculation != ""){
+                outputOne.textContent = runningTotal.textContent;
+                runningTotal.textContent = button.textContent;
+            }
             else {
                 runningTotal.textContent += button.textContent;
             }
@@ -59,6 +71,7 @@ buttons.forEach(button => {
         else if (button.classList == "alternative") {
             if (button.id == "clear") {
                 runningTotal.textContent = 0;
+                outputOne.textContent = "";
             }
             else if (button.id == "sign") {
                 if (runningTotal.textContent[0] == "-"){
@@ -75,31 +88,51 @@ buttons.forEach(button => {
         }
 
         else {
-            
-            if (button.id == "divide") {
+            console.log(button.id);
+            if (!outputOne.textContent){
                 outputOne.textContent = runningTotal.textContent;
                 runningTotal.textContent = 0;
-                userCalculation = "divide";
-            }
-            else if (button.id == "multiply") {
-                outputOne.textContent = runningTotal.textContent;
-                runningTotal.textContent = 0;
-                userCalculation = "multiply";
-            }
-            else if (button.id == "subtract") {
-                outputOne.textContent = runningTotal.textContent;
-                runningTotal.textContent = 0;
-                userCalculation = "subtract";
-            }
-            else if (button.id == "add") {
-                outputOne.textContent = runningTotal.textContent;
-                runningTotal.textContent = 0;
-                userCalculation = "add";
+
+                if (button.id == "divide") {
+                    userCalculation = button.id;
+                }
+                else if (button.id == "multiply") {
+                    userCalculation = button.id;
+                }
+                else if (button.id == "subtract") {
+                    userCalculation = button.id;
+                }
+                else if (button.id == "add") {
+                    userCalculation = button.id;
+                }
+                else {
+                    equal();
+                }
             }
             else {
-                let placeHolder = runningTotal.textContent;
-                runningTotal.textContent = equal();
-                outputOne.textContent = placeHolder;
+                if (button.id == "multiply") {
+                    equal()
+                    outputOne.textContent = "";
+                    userCalculation = button.id;
+                }
+                else if (button.id == "divide") {
+                    equal()
+                    outputOne.textContent = "";
+                    userCalculation = button.id;
+                }
+                else if (button.id == "add") {
+                    equal()
+                    outputOne.textContent = "";
+                    userCalculation = button.id;
+                }
+                else if (button.id == "subtract") {
+                    equal()
+                    outputOne.textContent = "";
+                    userCalculation = button.id;
+                }
+                else {
+                    equal();
+                }
             }
         }
     });
