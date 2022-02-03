@@ -35,7 +35,9 @@ button {
 .display {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     align-self: flex-end;
+    align-items: flex-end;
     margin: 0px;
 }
 .alternative {
