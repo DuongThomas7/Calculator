@@ -28,10 +28,12 @@ function equalCheck(){
 }
 
 function equal(){
-    let placeHolder = runningTotal.textContent;
-    runningTotal.textContent = equalCheck();
-    outputOne.textContent = placeHolder;
-    userCalculation = "";
+    if (userCalculation){
+        let placeHolder = runningTotal.textContent;
+        runningTotal.textContent = equalCheck();
+        outputOne.textContent = placeHolder;
+        userCalculation = "";
+    }
 }
 
 let userCalculation = "";
@@ -72,6 +74,7 @@ buttons.forEach(button => {
             if (button.id == "clear") {
                 runningTotal.textContent = 0;
                 outputOne.textContent = "";
+                userCalculation = "";
             }
             else if (button.id == "sign") {
                 if (runningTotal.textContent[0] == "-"){
